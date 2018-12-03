@@ -1,0 +1,16 @@
+runtime: python37
+#application: who-says-dajare
+#api_version: 1
+#threadsafe: true
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /.*
+  secure: always
+  script: auto
+
+#libraries:
+  ##- name: ssl
+  ##  version: latest
