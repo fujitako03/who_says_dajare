@@ -22,10 +22,7 @@ class Dajare(object):
 
 class DajareCheck(Resource):
     def get(self):
-        pass
-
-    def post(self):
-        # postを取得
+        # getを取得
         dajare = Dajare()
         data = request.json
         text = data.get("text")
@@ -41,6 +38,9 @@ class DajareCheck(Resource):
         res = {'is_dajare':is_dajare}
 
         return jsonify(res)
+
+    def post(self):
+        pass
 
 
 api.add_resource(DajareCheck, '/isdajare')
