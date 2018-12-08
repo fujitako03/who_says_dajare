@@ -38,7 +38,6 @@ def identity_num(str):
 
 
 
-# コントロール
 if __name__ == '__main__':
     # Using GPIO No.  to identify channel
     GPIO.setmode(GPIO.BCM)

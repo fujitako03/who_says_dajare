@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ダジャレトップ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Who Says Dajare</title>
 </head>
 <body>
-    ダジャレを言うのは誰じゃ
+    <a class="h3">ダジャレを言うのは誰じゃ</a>
+
+    <form action="{{ url_for('dajare_post') }}" method="post" class="form-horizontal">
+
+        <div class="form-group">
+            <label for="dajare_text" class="col-sm-2 control-label">ダジャレを言うのじゃ</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="dajare_text" name="dajare_text" value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 判定！
+            </button>
+          </div>
+        </div>
+    </form>
+
+
 </body>
 </html>
