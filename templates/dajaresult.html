@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>DajaResult</title>
-</head>
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Dajaresult{% endblock %}
+
+{% block content %}
 <body>
     <div class="h3">{{ dajare_text }}</div>
-    <div class="h4">{{ wake_ans }}</div>
+    <div class="h4">これは・・・{{ wake_ans }}</div>
 
-    <a href="{{url_for('top')}}"><button type="button" class="btn btn-primary btn-block">トップに戻る</button></a>
+    <a href="{{url_for('dajarepage.top')}}"><button type="button" class="btn btn-primary btn-block">トップに戻る</button></a>
 </body>
 </html>
+{% endblock %}
