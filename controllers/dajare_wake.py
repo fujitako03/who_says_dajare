@@ -26,18 +26,18 @@ class Dajarewake:
         self.sentence = sentence
 
         mecab = MeCab.Tagger("-Oyomi")
-        self.kana = mecab.parse(sentence)
+        self.kana = mecab.parse(sentence)[:-1]
         self.preprocessed = self.preprocessing(self.kana)
         self.devided = self.devide(self.preprocessed)
 
     def preprocessing(self, sentence):
         for i, replace_word in enumerate(self.replace_words):
-            sentence = sentence.replace(replace_word[0],replace_word[1])
+            sentence = sentence.replace(replace_word[0], replace_word[1])
         return sentence
 
     def devide(self, sentence):
         elements = []
-        repeat_num = len(sentence) - 1 - (self.kaburi - 1)
+        repeat_num = len(sentence) - (self.kaburi - 1)
         for i in range(repeat_num):
             elements.append(sentence[i:i+self.kaburi])
         return elements
