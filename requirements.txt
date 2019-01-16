@@ -7,3 +7,10 @@ numpy==1.15.4
 python-dateutil==2.7.5
 mecab-python3==0.996.1
 rpi.gpio==0.6.5
+Keras                    2.2.4
+Keras-Applications       1.0.6
+Keras-Preprocessing      1.0.5
+six==1.11.0
+h5py==2.8.0
+PyYAML==3.13
+scipy==1.1.0

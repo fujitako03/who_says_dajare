@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from controllers import dajare_page
+from controllers.servo_moter import SG90
 import os
 import sys
 

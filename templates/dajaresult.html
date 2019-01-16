@@ -4,10 +4,30 @@
 
 {% block content %}
 <body>
-    <div class="h3">{{ dajare_text }}</div>
-    <div class="h4">{{ wake_ans }}</div>
+    <div class="h3">投稿ダジャレ：{{ dajare_text }}</div>
+    <div class="h4">結果：布団が、{{ wake_ans }}</div>
+    <div class="h4">ダジャレスコア：{{ dajare_score }} 点</div>
 
     <a href="{{url_for('dajarepage.top')}}"><button type="button" class="btn btn-primary btn-block">トップに戻る</button></a>
+    <table class="table">
+        <th>
+            <td class="c1">順位</td>
+           <td class="c2">ダジャレ</td>
+           <td class="c3">点数</td>
+           <td class="c4">作者</td>
+           <td class="c5">日時</td>
+        </th>
+        {% for dajare in dajare_list %}
+            <tr>
+                <td class="c1"></td>
+                <td class="c1">{{ loop.index }}　位</td>
+               <td class="c2">{{dajare.dajare}} </td>
+               <td class="c3">{{dajare.score}} </td>
+               <td class="c4">{{dajare.author}} </td>
+               <td class="c5">{{dajare.datetime}} </td>
+            </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
 {% endblock %}

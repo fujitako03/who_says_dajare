@@ -128,3 +128,6 @@ dmypy.json
 # csvfile
 *.csv
 *.tsv
+*.dic
+*.h5
+*.ipynb
