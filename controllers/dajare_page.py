@@ -61,7 +61,6 @@ class DajarePage:
         # ダジャレ判定
         sh = Shareka(dajare_text)
         is_dajare = sh.dajarewake()
-        is_dajare = True
 
         # ダジャレ評価AI
         uk = Ukeruka()
@@ -83,22 +82,30 @@ class DajarePage:
                 dajare += ([0] * (30 - len(dajare)))
             res = uk.predict(np.array([dajare]),
                              model_filepath="./model/model.h5")
-            dajare_score = res[0][0] * 100
+            dajare_score = (res[0][0] - 0.56) * 10 * 100 + 55
+            if dajare_score > 100:
+                dajare_score = 99.99
+            elif dajare_score < 30:
+                dajare_score = 30.15
 
             # 結果によって布団をふっとばす
             if dajare_score > 50:
-                wake_ans = "ふっとんだ！"
+                wake_ans = "布団がふっとんだ！"
+                futon_img = "futtonda.png"
 
                 # モーターを動かす（futonモードの場合）
                 if os.getenv('MODE') == "futon":
                     servo.setdirection(-50, 80)
                     time.sleep(0.7)
                     servo.cleanup()
+
             else:
-                wake_ans = "吹っ飛ばない。。。"
+                wake_ans = "吹っ飛ばない。。。（もっと面白いダジャレを言えるはず！）"
+                futon_img = "futtobanai.png"
 
         else:
-            wake_ans = "・・・・・・・・なんて？"
+            wake_ans = "なんて？（ダジャレを入力してください）"
+            futon_img = "nante.png"
             dajare_score = 0
 
         # Datastoreへ保存・過去のデータを読み込み
@@ -111,5 +118,6 @@ class DajarePage:
         return render_template("dajaresult.html",
                                dajare_text=dajare_text,
                                wake_ans=wake_ans,
+                               futon_img=futon_img,
                                dajare_score=round(dajare_score, 2),
                                dajare_list=dajare_list)

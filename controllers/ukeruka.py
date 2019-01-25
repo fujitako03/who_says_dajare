@@ -5,18 +5,23 @@ from keras.optimizers import *
 from keras.layers import *
 from keras.callbacks import *
 from keras.models import *
+import tensorflow as tf
 import MeCab
 import re
 from numpy import *
 import codecs
 
 
+graph = tf.get_default_graph()
+
 class Ukeruka:
 
     def predict(self, comments, model_filepath="model.h5"):
-        model = load_model(model_filepath)
-        ret = model.predict(comments)
-        return ret
+        global graph
+        with graph.as_default():
+            model = load_model(model_filepath)
+            ret = model.predict(comments)
+            return ret
 
 
     def share_to_yomi(self, raw_text):

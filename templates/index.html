@@ -1,27 +1,31 @@
-{% extends "bootstrap/base.html" %}
+{% extends "layout.html" %}
 
 {% block title %}Who Says Dajare?{% endblock %}
 
 {% block content %}
-    <h3 class="h3">ふとんがふっとんだマシーン（仮）</h3>
+    <!-- コンテンツ -->
+    <div class="col-md-10 col-md-offset-1">
+        <div class="h1" style="color: #E8974D; font-weight: bold;">オフトゥンフライングシステム</div>
 
-    <form action="{{ url_for('dajarepage.dajare_post') }}" method="post" class="form-horizontal">
+        <form action="{{ url_for('dajarepage.dajare_post') }}" method="post" class="form-horizontal">
 
-        <div class="form-group mx-auto">
-            <label for="dajare_author" class="mx-auto">名前</label>
-            <input type="text" class="form-control" id="dajare_author" name="dajare_author" value="名無しのダジャレ王">
-            
-            <label for="dajare_text" class="mx-auto">ダジャレを言いなしゃれ</label>
-            <input type="text" class="form-control" id="dajare_text" name="dajare_text" value="">
-        </div>
+            <div class="form-group mx-auto">
+                <div class="form-box" style="margin: 30px">
+                    <label for="dajare_author" class="mx-auto"><h4>あなたの名前</h4></label>
+                    <input type="text" class="form-control input-form" id="dajare_author" name="dajare_author" value="匿名にしとくねぇ" style="text-align: center">
+                </div>
+                <div class="form-box" style="margin: 30px">
+                    <label for="dajare_text" class="mx-auto"><h4>ダジャレを言いなしゃれ</h4></label>
+                    <input type="text" class="form-control input-form" id="dajare_text" name="dajare_text" value="" style="text-align: center">
+                </div>
+            </div>
 
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">
-                吹っ飛ぶ？
-            </button>
-          </div>
-        </div>
-    </form>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" style="background-color:#E8974D;">
+                    吹っ飛ぶ？
+                </button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
