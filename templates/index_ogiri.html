@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Who Says Dajare?{% endblock %}
+
+{% block content %}
+    <!-- コンテンツ -->
+    <div class="col-md-10 col-md-offset-1">
+        <div class="h1" style="color: #E8974D; font-weight: bold;">ダジャレ合戦！</div>
+
+        <form action="{{ url_for('dajarepage.dajare_post') }}" method="post" class="form-horizontal">
+
+            <div class="form-group mx-auto">
+                <div class="form-box" style="margin: 30px">
+                    <label for="dajare_author" class="mx-auto"><h4>回答者</h4></label>
+                    <select class="form-control input-form" id="dajare_author" name="dajare_author"  >
+                        {% for author in authors_list %}
+                            <option value="{{ author }}">{{ author }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-box" style="margin: 30px">
+                    <label for="dajare_text" class="mx-auto"><h4>ダジャレを言いなしゃれ</h4></label>
+                    <input type="text" class="form-control input-form" id="dajare_text" name="dajare_text" value="" style="text-align: center">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" style="background-color:#E8974D;">
+                    吹っ飛ぶ？
+                </button>
+            </div>
+
+            <br><br>
+            <a href="{{ url_for('dajarepage.preview') }}">暫定スコア</a>
+        </form>
+    </div>
+{% endblock %}
+
