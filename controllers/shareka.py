@@ -75,7 +75,6 @@ class Shareka:
             return False
 
 
-
 if __name__ == '__main__':
     dj = Shareka("布団が吹っ飛んだ。」。。")
     print(dj.kana)

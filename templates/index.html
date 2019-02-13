@@ -4,27 +4,45 @@
 
 {% block content %}
     <!-- コンテンツ -->
-    <div class="col-md-10 col-md-offset-1">
-        <div class="h1" style="color: #E8974D; font-weight: bold;">オフトゥンフライングシステム</div>
+    <div class="col-md-12">
+        <br><br>
+        <div class="h1" style="color: #E8974D; font-weight: bold; font-size: 5em">オフトゥンフライングシステム@ホリエモン万博</div>
 
         <form action="{{ url_for('dajarepage.dajare_post') }}" method="post" class="form-horizontal">
 
             <div class="form-group mx-auto">
                 <div class="form-box" style="margin: 30px">
-                    <label for="dajare_author" class="mx-auto"><h4>あなたの名前</h4></label>
-                    <input type="text" class="form-control input-form" id="dajare_author" name="dajare_author" value="匿名にしとくねぇ" style="text-align: center">
+                    <label for="dajare_author" class="mx-auto"><h1>あなたの名前</h1></label>
+                    <input type="text" class="form-control input-form" id="dajare_author" name="dajare_author" value="匿名にしとくねぇ" style="text-align: center; font-size: 40px; height: 60px;">
                 </div>
                 <div class="form-box" style="margin: 30px">
-                    <label for="dajare_text" class="mx-auto"><h4>ダジャレを言いなしゃれ</h4></label>
-                    <input type="text" class="form-control input-form" id="dajare_text" name="dajare_text" value="" style="text-align: center">
+                    <label for="dajare_text" class="mx-auto"><h1>ダジャレを言いなしゃれ</h1></label>
+                    <input type="text" class="form-control input-form" id="dajare_text" name="dajare_text" value="" style="text-align: center; font-size: 40px; height: 60px">
                 </div>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success" style="background-color:#E8974D;">
+                <button type="submit" class="btn btn-success" style="background-color:#E8974D; font-size: 25px">
                     吹っ飛ぶ？
                 </button>
             </div>
+            <br><br>
+            <h4>ヒント単語</h4>
+            <div style="font-size: 2em">
+                {% for tango in normal_tango_list %}
+            　       {{tango}}　／　
+                {% endfor %}
+                <br>
+                {% for tango in ryuko_tango_list %}
+            　       {{tango}}　／　
+                {% endfor %}
+            </div>
+
+
+        </form>
+
+        <br><br>
+            <a href="{{ url_for('dajarepage.preview') }}"><h1>暫定スコア</h1></a>
         </form>
     </div>
 {% endblock %}

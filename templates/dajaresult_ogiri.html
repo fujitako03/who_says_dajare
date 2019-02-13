@@ -28,7 +28,7 @@
             <br><br>
 
             <div class="h1" style="font-size:4em;: bold">合計得点</div>
-            <canvas id="myChart" style="height: 350px"></canvas>
+            <canvas id="myChart" style="height: 250px"></canvas>
 
             <br><br>
             <a href="{{url_for('dajarepage.top')}}">
@@ -39,8 +39,8 @@
             <!-- 過去のダジャレリスト -->
             <h2>ダジャレリスト</h2>
 
-            <table class="table">
-                <th style="font-weight: bold; font-size: 2em">
+            <table class="table" style="font-weight: bold; font-size: 3em">
+                <th>
                     <td class="c1">順位</td>
                    <td class="c2">ダジャレ</td>
                    <td class="c3">点数</td>
@@ -113,8 +113,8 @@
                       min: 0, // X軸の最小値
                       // max: 0, // X軸の最小値
                       beginAtZero: true,
-                      fontSize: 45,       //フォントサイズ
-                      fontweight: "bold",
+                      fontSize: 55,       //フォントサイズ
+                      fontweight: 900,
                       fontColor: "#fff", //フォントカラー
                       // maxRotation: 0,  // 最大角度
                       minRotation: 0, // 斜めに表示
@@ -134,12 +134,14 @@
                       fontColor: "#fff", //フォントカラー
                       maxRotation: 0,  // 最大角度
                       minRotation: 0, // 斜めに表示
+                      display:false,
                 },
               }],
             },
       };
 
       var ctx = document.getElementById("myChart").getContext('2d');
+      ctx.canvas.height = 150;
       new Chart(ctx, {
           type: 'bar',
           data: score_data,

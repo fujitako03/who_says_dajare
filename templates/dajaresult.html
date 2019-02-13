@@ -5,35 +5,35 @@
 {% block content %}
     <div>
         <!-- コンテンツ -->
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <br><br>
-            <div class="h1" style="font-weight: bold">『{{ dajare_text }}』</div>
+            <div class="h1" style="font-size:5em;font-weight: bold">『{{ dajare_text }}』</div>
             <br>
             <div class="h4">ダジャレスコア</div>
-            <span class="score" style="color:#E8974D;">{{ dajare_score }} 点</span>
+            <span class="score" style="color:#E8974D;">{{ dajare_score}} 点</span>
 
             <!-- 画像 -->
             <div id="img-box">
-                <img src="../static/img/{{ futon_img }}" class="img-responsive center-block">
+                <img src="../static/img/{{ futon_img }}" class="img-responsive center-block" style="width: 100%">
                 {% if futon_img == 'futtonda.png' %}
                     <p>画像：https://dic.nicovideo.jp/a/布団が吹っ飛んだ</p>
                 {% endif %}
             </div>
 
             <!-- 結果 -->
-            <div class="h4">{{ wake_ans }}</div>
+            <div class="h1">{{ wake_ans }}</div>
 
             <br><br>
 
             <a href="{{url_for('dajarepage.top')}}">
-                <button type="button" class="btn btn-success btn-block" style="background-color:#E8974D;">トップに戻る</button>
+                <button type="button" class="btn btn-success btn-block" style="background-color:#E8974D; font-size: 2em;">トップに戻る</button>
             </a>
 
             <br><br>
             <!-- 過去のダジャレリスト -->
-            <h2>過去のおもしろダジャレ</h2>
+            <h1>今日のダジャレランキング</h1>
 
-            <table class="table">
+            <table class="table" style="font-weight: bold; font-size: 3em">
                 <th style="font-weight: bold">
                     <td class="c1">順位</td>
                    <td class="c2">ダジャレ</td>
@@ -47,7 +47,7 @@
                         <td class="c1"></td>
                         <td class="c1">{{ loop.index }}　位</td>
                        <td class="c2">{{dajare.dajare}} </td>
-                       <td class="c3">{{dajare.score | round(2)}} </td>
+                       <td class="c3">{{dajare.score}} </td>
                        <td class="c4">{{dajare.author}} </td>
                        <td class="c5">{{dajare.datetime}} </td>
                     </tr>
@@ -56,7 +56,7 @@
                         <td class="c1"></td>
                         <td class="c1">{{ loop.index }}　位</td>
                        <td class="c2">{{dajare.dajare}} </td>
-                       <td class="c3">{{dajare.score | round(2)}} </td>
+                       <td class="c3">{{dajare.score}} </td>
                        <td class="c4">{{dajare.author}} </td>
                        <td class="c5">{{dajare.datetime}} </td>
                     </tr>

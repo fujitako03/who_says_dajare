@@ -4,11 +4,16 @@ from controllers.ukeruka import Ukeruka
 from controllers.servo_moter import SG90
 from datetime import datetime
 from google.cloud import datastore
+from gensim.models import KeyedVectors
+from joblib import dump, load
+import pickle
 import pandas as pd
 import numpy as np
+from numpy.random import normal
 import time
 import os
 import uuid
+import random
 
 # lueprintオブジェクトを生成します
 app = Blueprint('dajarepage', __name__)
@@ -21,8 +26,23 @@ authors = pd.read_csv("./data/authors.csv")
 author_order = dict()
 for index, row in authors.iterrows():
     author_order[row["author"]] = row["num"]
-
 authors_list = authors.author
+
+# 保存したモデルをロードする
+r_model_path = './model/rf_classifier_raspberry.joblib'
+rf_model = load(r_model_path)
+
+# # read w2v model
+# model_dir = './model/entity_vector.model.bin'
+# w2v_model = KeyedVectors.load_word2vec_format(model_dir, binary=True)
+
+# read negapoji_dix
+np_df = pd.read_csv("./data/np_ja.dic", sep=':', header=None)
+np_df.columns = ["word", "kana", "part", "np_score"]
+np_df.head(2)
+npjp_dic = dict()
+for index, row in np_df.iterrows():
+    npjp_dic[row.word] = row.np_score
 
 class DajarePage:
     @app.route('/', methods=['GET', 'POST'])
@@ -34,7 +54,14 @@ class DajarePage:
         if os.getenv("OGIRI") == "ogiri":
             return render_template("index_ogiri.html", authors_list=author_order)
         else:
-            return render_template("index.html", author_order=authors_list)
+            # ヒント単語¥
+            tango_normal = pd.read_csv("./data/tango_normal.csv")
+            tango_ryukogo = pd.read_csv("./data/tango_ryukogo.csv")
+            normal_tango_list = random.sample(list(tango_normal.word), 10)
+            ryuko_tango_list = random.sample(list(tango_ryukogo.word), 10)
+            return render_template("index.html", author_order=authors_list,
+                                   normal_tango_list=normal_tango_list,
+                                   ryuko_tango_list=ryuko_tango_list)
 
     def dajare_insert_to_datastore(self, client, dajare_text, dajare_author, dajare_score):
         # DataStoreに格納
@@ -109,6 +136,10 @@ class DajarePage:
         # フォームの情報を取得
         dajare_text = request.form.get('dajare_text')
         dajare_author = request.form.get('dajare_author')
+        checkbox_values = request.form.getlist('dajare_label')
+        translate_flg = 1 if "1" in checkbox_values else 0
+        reration_flg = 1 if "2" in checkbox_values else 0
+        potential_flg = 1 if "3" in checkbox_values else 0
 
         # ダジャレ判定
         sh = Shareka(dajare_text)
@@ -121,46 +152,44 @@ class DajarePage:
 
         # モーターを設定（futonモードの場合）
         if os.getenv('MODE') == "futon":
-            servo = SG90(4, 50)
+            pass
+            # servo = SG90(4, 50)
 
         # 判定結果により
-        if is_dajare:
-
-            # ダジャレ評価
-            kana_dajare = uk.share_to_yomi(dajare_text)
-            dajare = [ord(x) for x in kana_dajare]
-            dajare = dajare[:30]
-            if len(dajare) < 30:
-                dajare += ([0] * (30 - len(dajare)))
+        if is_dajare or (len(checkbox_values) > 0):
 
             # 予測
             # 　デバッグモードの場合同じ点数をつける
             if os.getenv("DEBUG") == "debug":
                 dajare_score = 66
+            elif dajare_text in ["布団がふっとんだ", "ふとんがふっとんだ"]:
+                dajare_score = 210
             else:
-                res = uk.predict(np.array([dajare]),
-                                 model_filepath="./model/model.h5")
-                dajare_score = round((res[0][0] - 0.56) * 10 * 100 + 55)
-
-            # 100点を超えないように調整
-            if dajare_score > 100:
-                dajare_score = 99.99
-            elif dajare_score < 0:
-                dajare_score = 1
+                # ダジャレ評価
+                features = uk.create_features(dajare_text, npjp_dic)
+                features.extend([translate_flg, reration_flg, potential_flg])
+                print(features)
+                pred_prob = rf_model.predict_proba([features])
+                pred_prob = pred_prob + normal(0.03, 0.05)
+                dajare_score = round(pred_prob[0][1] * 100)
+                dajare_score = 100 if dajare_score > 100 else dajare_score
 
             # 結果によって布団をふっとばす
-            if dajare_score > 50:
+            if dajare_score > 80:
                 wake_ans = "布団がふっとんだ！"
                 futon_img = "futtonda.png"
 
                 # モーターを動かす（futonモードの場合）
                 if os.getenv('MODE') == "futon":
+                    servo = SG90(4, 50)
                     servo.setdirection(-50, 80)
                     time.sleep(0.7)
+                    # モーターをクリーンアップ
                     servo.cleanup()
 
+
             else:
-                wake_ans = "吹っ飛ばない。。。（もっと面白いダジャレを言えるはず！）"
+                wake_ans = "吹っ飛ばない。。。"
                 futon_img = "futtobanai.png"
 
         else:
@@ -179,13 +208,14 @@ class DajarePage:
                                    dajare_text=dajare_text,
                                    wake_ans=wake_ans,
                                    futon_img=futon_img,
-                                   dajare_score=round(dajare_score, 2),
+                                   dajare_score=int(dajare_score),
                                    dajare_list=dajare_list,
                                    total_score_list=total_score_list)
         else:
             # Datastoreへ保存・過去のデータを読み込み
             try:
-                dj.dajare_insert_to_datastore(client, dajare_text, dajare_author, dajare_score)
+                if not dajare_text in ["布団がふっとんだ", "ふとんがふっとんだ"]:
+                    dj.dajare_insert_to_datastore(client, dajare_text, dajare_author, dajare_score)
                 dajare_list = dj.dajare_query_datastore(client)
             except:
                 dajare_list = None
@@ -194,7 +224,7 @@ class DajarePage:
                                dajare_text=dajare_text,
                                wake_ans=wake_ans,
                                futon_img=futon_img,
-                               dajare_score=round(dajare_score, 2),
+                               dajare_score=int(dajare_score),
                                dajare_list=dajare_list)
 
 
