@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
-# from controllers import dajare_page
-# from controllers.servo_moter import SG90
+from controllers import dajare_page
+from controllers.servo_moter import SG90
 import os
 import sys
 
@@ -24,12 +24,7 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 # 分割先のコントローラー(Blueprint)を登録する
-# app.register_blueprint(dajare_page.app)
-
-# TEST
-@app.route('/')
-def index():
-    return 'who says dajare?'
+app.register_blueprint(dajare_page.app)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

@@ -1,9 +1,9 @@
 from flask import render_template, Blueprint, request
 from controllers.shareka import Shareka
 from controllers.ukeruka import Ukeruka
-from controllers.servo_moter import SG90
+#from controllers.servo_moter import SG90
 from datetime import datetime
-from google.cloud import datastore
+# from google.cloud import datastore
 from gensim.models import KeyedVectors
 from joblib import dump, load
 import pickle
@@ -65,19 +65,20 @@ class DajarePage:
 
     def dajare_insert_to_datastore(self, client, dajare_text, dajare_author, dajare_score):
         # DataStoreに格納
-        tdatetime = datetime.now()
-        str_time = tdatetime.strftime('%Y-%m-%d %H:%M:%S')
+        # tdatetime = datetime.now()
+        # str_time = tdatetime.strftime('%Y-%m-%d %H:%M:%S')
 
-        key = client.key('Dajare')
-        dajare_key = datastore.Entity(key)
-        dajare_key.update({
-            'dajare_id': str(uuid.uuid4()),
-            'datetime': str_time,
-            'dajare': dajare_text,
-            'author': dajare_author,
-            'score': dajare_score
-        })
-        client.put(dajare_key)
+        # key = client.key('Dajare')
+        # dajare_key = datastore.Entity(key)
+        # dajare_key.update({
+        #     'dajare_id': str(uuid.uuid4()),
+        #     'datetime': str_time,
+        #     'dajare': dajare_text,
+        #     'author': dajare_author,
+        #     'score': dajare_score
+        # })
+        # client.put(dajare_key)
+        pass
 
     def dajare_query_datastore(self, client):
         query = client.query(kind='Dajare')
@@ -180,12 +181,12 @@ class DajarePage:
                 futon_img = "futtonda.png"
 
                 # モーターを動かす（futonモードの場合）
-                if os.getenv('MODE') == "futon":
-                    servo = SG90(4, 50)
-                    servo.setdirection(-50, 80)
-                    time.sleep(0.7)
-                    # モーターをクリーンアップ
-                    servo.cleanup()
+                # if os.getenv('MODE') == "futon":
+                #     servo = SG90(4, 50)
+                #     servo.setdirection(-50, 80)
+                #     time.sleep(0.7)
+                #     # モーターをクリーンアップ
+                #     servo.cleanup()
 
 
             else:

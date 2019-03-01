@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block title %}Dajaresult{% endblock %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0"></script>
+    <div>
+        <!-- コンテンツ -->
+        <div class="col-md-12">
+            <!-- 結果 -->
+            <div class="h1" style="font-size:4em;: bold">合計得点</div>
+            <canvas id="myChart" style="height: 340px"></canvas>
+
+            <br><br>
+            トップに戻る
+
+            <br><br>
+            <!-- 過去のダジャレリスト -->
+            <h2>ダジャレリスト</h2>
+
+            <table class="table">
+                <th style="font-weight: bold; font-size: 2em">
+                    <td class="c1">順位</td>
+                   <td class="c2">ダジャレ</td>
+                   <td class="c3">点数</td>
+                   <td class="c4">作者</td>
+                   <td class="c5">日時</td>
+                </th>
+                {% for dajare in dajare_list %}
+                    {% if dajare.dajare == dajare_text %}
+                    <tr style="color: #E8974D; font-weight: bold">
+                        <td class="c1"></td>
+                        <td class="c1">{{ loop.index }}　位</td>
+                       <td class="c2">{{dajare.dajare}} </td>
+                       <td class="c3">{{dajare.score | round(2)}} </td>
+                       <td class="c4">{{dajare.author}} </td>
+                       <td class="c5">{{dajare.datetime}} </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td class="c1"></td>
+                        <td class="c1">{{ loop.index }}　位</td>
+                       <td class="c2">{{dajare.dajare}} </td>
+                       <td class="c3">{{dajare.score | round(2)}} </td>
+                       <td class="c4">{{dajare.author}} </td>
+                       <td class="c5">{{dajare.datetime}} </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var scores = [{% for author in total_score_list %}"{{ author.score }}",{% endfor %}];
+
+        var data_labels = [{% for author in total_score_list %}"{{ author.author }}",{% endfor %}];
+
+        var score_data = {
+            labels: data_labels,
+            datasets: [{
+                data: scores,
+                backgroundColor: ['#de9610', '#c93a40', '#fff001', '#d06d8c', "#65ace4", "#a0c238"],
+                datalabels: {
+                    align: 'end',
+                    anchor: 'end',
+                    color: '#E84600',
+                    font: {
+                        size: 100,
+                        weight: 'bold'
+                    },
+                    formatter: Math.round
+					},
+            }]
+          };
+
+        var option = {
+            plugins: {
+              filler: {
+                propagate: true
+              }
+            },
+            legend: {
+              display: false,
+            },
+            // 目盛の設定
+            scales: {
+              // 横軸の設定
+                xAxes: [{
+                  ticks: { // 目盛の設定
+                      // display:false,
+                      min: 0, // X軸の最小値
+                      // max: 0, // X軸の最小値
+                      beginAtZero: true,
+                      fontSize: 45,       //フォントサイズ
+                      fontweight: "bold",
+                      fontColor: "#fff", //フォントカラー
+                      // maxRotation: 0,  // 最大角度
+                      minRotation: 0, // 斜めに表示
+                  },
+                // グリッド線の設定
+                gridLines:{
+                    display: false,
+                },
+              }],
+              //縦軸の設定
+              yAxes: [{
+                  barThickness:20,  //各バーの幅
+                  ticks: {
+                      max:Math.round(Math.max.apply(null, scores)) * 1.2,
+                      beginAtZero: true, //開始値を0にする
+                      fontSize: 20,       //フォントサイズ
+                      fontColor: "#fff", //フォントカラー
+                      maxRotation: 0,  // 最大角度
+                      minRotation: 0, // 斜めに表示
+                },
+              }],
+            },
+      };
+
+      var ctx = document.getElementById("myChart").getContext('2d');
+      new Chart(ctx, {
+          type: 'bar',
+          data: score_data,
+          options: option,
+      });
+
+    </script>
+{% endblock %}
