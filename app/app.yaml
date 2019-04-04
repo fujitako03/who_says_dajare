@@ -1,0 +1,24 @@
+service: default
+runtime: python37
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 2
+instance_class: F2
+
+handlers:
+- url: /static
+  static_dir: static/dist/static
+  http_headers:
+    X-Content-Type-Options: nosniff
+    X-Frame-Options: DENY
+    X-XSS-Protection: 1; mode=block
+- url: /
+  static_files: static/dist/index.html
+  upload: static/dist/index.html
+  http_headers:
+    X-Content-Type-Options: nosniff
+    X-Frame-Options: DENY
+    X-XSS-Protection: 1; mode=block
+- url: /.*
+  script: auto

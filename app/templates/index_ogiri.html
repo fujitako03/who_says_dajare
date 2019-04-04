@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}Who Says Dajare?{% endblock %}
+<div class="form-box" style="margin: 30px; font-size: 20px">
+<label for="dajare_author" class="mx-auto"><h1>回答者</h1></label>
+{% block content %}
+<select class="form-control input-form h1" id="dajare_author" name="dajare_author" style="text-align: center; font-size: 40px; height: 60px;">
+{% for author in authors_list %}
+<!-- コンテンツ -->
+<div class="col-md-12">
+<div class="h1" style="color: #E8974D; font-weight: bold; font-size: 5em">HORIEPPON　ダジャレ合戦</div>
+
+<div class="form-group mx-auto">
+<option value="{{ author }}">{{ author }}</option>
+{% endfor %}
+</select>
+                </div>
+                <div class="form-box" style="margin: 30px; font-size: 20px">
+                    <label for="dajare_text" class="mx-auto"><h1>ダジャレを言いなしゃれ</h1></label>
+                    <input type="text" class="form-control input-form h1" id="dajare_text" name="dajare_text" value="" style="text-align: center; font-size: 40px; height: 60px">
+                </div>
+
+                <div class="form-box" style="margin: 30px; font-size: 20px">
+                    <label class="form-check-label">
+                        <input class="form-check-input" name="dajare_label" type="checkbox" value="1">翻訳系
+                    </label>　　
+                    <label class="form-check-label">
+                        <input class="form-check-input" name="dajare_label" type="checkbox" value="2">関連系
+                    </label>　　
+                    <label class="form-check-label">
+                        <input class="form-check-input" name="dajare_label" type="checkbox" value="3">潜在系
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" style="background-color:#E8974D; font-size: 25px">
+                    吹っ飛ぶ？
+                </button>
+            </div>
+
+            <br><br>
+            <h1>暫定スコア</h1>
+        </form>
+    </div>
+{% endblock %}
