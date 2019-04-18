@@ -1,43 +1,59 @@
 ## summary
+
 これから作るよ
 
-# deploy
+# set up
 
-イメージファイル作成
-```
-$ sh build.sh
-```
+以下のコマンドが利用出来る状態にする
 
-コンソール起動
 ```
-$ sh run.sh
-```
-
-GCP SDK初期化
-```
-$ gcloud init
+$ python -V # python2系が使える（GCPのSDKを動すのはpython2系）
+$ python3 -V # python3系が使える（アプリ起動はpython3系）
+$ pip3 -V # python3系のパッケージ管理ができる
+$ gcloud config list # GCPのSDKが使える 
+$ npm -V # npmが使える
 ```
 
-デプロイ
+python3のパッケージをインストール
+
 ```
-$ gcloud app deploy 
+$ cd app
+$ pip3 install -r requirements.txt
+```
+
+node.jsのパッケージをインストール
+
+```
+$ cd app/static
+$ npm install 
 ```
 
 # local test
 
-API起動
+2つ同時にサーバを起動する必要がある
+
+APIサーバ起動
+
 ```
-$ cd app/
-$ python3 main.py
+$ sh run_backend.sh
 ```
 
-UI初期化、起動
+UIサーバ起動
+
 ```
-$ cd app/static
-$ npm install 
-$ npm start
+$ sh run_frontend.sh
 ```
 
-# reference
-tkazusa/docker-appengine-python37
-https://github.com/tkazusa/docker-appengine-python37
+# deploy
+
+初回のみ以下でデプロイ先を設定
+
+```
+$ gcloud init
+```
+
+以下でデプロイする
+
+```
+$ sh deploy.sh
+```
