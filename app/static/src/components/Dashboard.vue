@@ -2,6 +2,7 @@
 <div>
   <h1>???WHO SAYS DAJARE???</h1>
   <p>{{ result }}</p>
+  <input type="text" v-model=dajare>
 </div>
 </template>
 
@@ -11,6 +12,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      dajare: null,
       result: null,
       test: 'test'
     }
