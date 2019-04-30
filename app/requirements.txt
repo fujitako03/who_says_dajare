@@ -14,3 +14,4 @@ PyYAML==3.13
 scipy==1.1.0
 scikit-learn==0.20.2
 gensim==3.7.1
+igo-python==1.0.0

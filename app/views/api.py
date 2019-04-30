@@ -10,6 +10,7 @@ from flask import request
 
 from views import api
 from models import Shareka
+from models import Ukeruka
 
 
 @api.route('/hello', methods=['GET'])
@@ -21,8 +22,13 @@ def hello():
 def evaluate():
     dajare = request.args.get('dajare')
     shareka = Shareka(dajare)
-
+    shareka.divide()
     shareka.evaluate()
-    data = shareka.to_dict()
+    if not shareka.is_dajare:
+        data = {'result': 'なんて？'}
+        return jsonify(dict(data=data))
 
+    ukeruka = Ukeruka(dajare)
+    ukeruka.evaluate()
+    data = ukeruka.to_dict()
     return jsonify(dict(data=data))
