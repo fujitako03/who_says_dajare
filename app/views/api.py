@@ -25,7 +25,7 @@ def evaluate():
     shareka.divide()
     shareka.evaluate()
     if not shareka.is_dajare:
-        data = {'result': 'なんて？'}
+        data = {'result': 0}
         return jsonify(dict(data=data))
 
     ukeruka = Ukeruka(dajare)

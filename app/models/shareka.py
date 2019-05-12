@@ -1,6 +1,7 @@
-from igo.Tagger import Tagger
 from collections import Counter
+from igo.Tagger import Tagger
 
+tagger = Tagger()
 
 replace_words = [
     ['。', ''],
@@ -30,8 +31,6 @@ replace_words = [
     ['ー', '']
 ]
 
-tagger = Tagger()
-
 
 class Shareka:
     def __init__(self, sentence, kaburi=2):
@@ -44,9 +43,13 @@ class Shareka:
         self.is_dajare = None
 
     def divide(self):
-        yomi = ''.join(
-            [m.feature.split(',')[7] for m in tagger.parse(self.sentence)]
-        )
+        yomi = ''
+        for m in tagger.parse(self.sentence):
+            feature = m.feature.split(',')
+            if len(feature) > 7:
+                yomi += feature[7]
+            else:
+                yomi += m.surface
         for r in replace_words:
             yomi = yomi.replace(r[0], r[1])
         self.yomi = yomi
@@ -85,7 +88,8 @@ class Shareka:
 
 
 if __name__ == '__main__':
-    dajare = '「布団が吹っ飛んだ。」'
+    # dajare = '「布団が吹っ飛んだ。」'
+    dajare = 'メンターランチで食べたラーメン'
     shareka = Shareka(dajare, 3)
     shareka.divide()
     shareka.evaluate()

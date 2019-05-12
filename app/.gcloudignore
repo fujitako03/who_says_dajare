@@ -13,10 +13,15 @@
 .git
 .gitignore
 
+*.DS_Store
+
 # Python pycache:
 __pycache__/
+*.pyc
 # Ignored by the build system
 /setup.cfg
 
 static/node_modules/
+*~
+static/!dist/
 *~

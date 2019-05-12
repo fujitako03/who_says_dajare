@@ -36,7 +36,7 @@ class Ukeruka:
         self.dajarate = \
             self.duplicate_num * self.repeat_num / self.sentence_length
 
-        result = np.random.rand()
+        result = np.random.randint(low=1, high=100)
         self.result = result
 
     def to_dict(self):
@@ -54,7 +54,8 @@ class Ukeruka:
 
 
 if __name__ == '__main__':
-    dajare = '「布団が吹っ飛んだ。」'
+    # dajare = '「布団が吹っ飛んだ。」'
+    dajare = 'メンターランチで食べたラーメン'
     ukeruka = Ukeruka(dajare)
     ukeruka.evaluate()
     print(ukeruka.to_dict())

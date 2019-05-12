@@ -1,10 +1,9 @@
 service: default
 runtime: python37
 
+instance_class: F1
 automatic_scaling:
-  min_instances: 0
   max_instances: 2
-instance_class: F2
 
 handlers:
 - url: /static
