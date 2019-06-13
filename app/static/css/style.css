@@ -1,6 +1,77 @@
 body {
-    background-color: #5AA8A7;
-    color: white;
+    background-color: black;
+    color: #fff;
+    font-family: 'TsukuARdGothic-Regular',sans-serif;
+    background-image: url("../img/futon_bg.jpeg");
+    background-size: cover;
 }
+
+h2 {
+    font-family: 'TsukuARdGothic-Regular',sans-serif;
+    margin: 6% 8%;
+    padding: 10px 10px 10px;
+    font-size: 35px;
+    text-shadow:1px 1px 5px #070707;
+    font-weight   : bolder ; 
+}
+
+
+.kai {
+    font-family: 'TsukuARdGothic-Regular',sans-serif;
+    text-shadow:3px 3px 5px #070707;
+}
+
+.cp_iptxt {
+	position: relative;
+	width: 80%;
+    margin: 10px 20%;
+}
+
+.cp_iptxt input[type='text'] {
+	font: 15px/24px 'TsukuARdGothic-Regular',sans-serif;;
+	box-sizing: border-box;
+	width: 58%;
+	padding: 0.3em;
+	transition: 0.3s;
+	letter-spacing: 1px;
+    color: #fff;
+    border: 0px solid #585555;
+    background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 1px 1px 2px 0 #777777 inset;
+	border-radius: 0px;
+}
+
+.ef input[type='text']:focus {
+    outline: none;
+    background-color: rgba(66, 65, 65, 0.7);
+    /*box-shadow: inset 1px 1px 2px 0 #c9c9c9*/;
+
+}
+
+.button {
+    display       : inline-block;
+    border-radius : 2%;          /* 角丸       */
+    font-size     : 20pt;        /* 文字サイズ */
+    font-family   : 'TsukuARdGothic-Regular',sans-serif;
+    font-weight   : bolder ;            /*フォントのウェイト*/
+    text-align    : center;      /* 文字位置   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 1% 64px;   /* 余白       */
+    background    : #00b3b3;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    line-height   : 1em;         /* 1行の高さ  */
+    opacity       : 0.9;         /* 透明度     */
+    transition    : .3s;         /* なめらか変化 */
+    box-shadow    : 1px 1px 31px #666666;  /* 影の設定 */
+    margin: 5% 20%;
+
+}
+
+.button:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    opacity       : 1;           /* カーソル時透明度 */
+}
+
+
 
 .wf-mplus1p { font-family: "M PLUS 1p"; }
