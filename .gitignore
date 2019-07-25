@@ -133,3 +133,7 @@ dmypy.json
 *.dic
 *.h5
 *.ipynb
+
+# static
+app/static/package-lock.json
+app/static/node_modules/

@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 
 from flask import jsonify
 from flask import request
+import numpy as np
 
 from views import api
 from models import Shareka
@@ -30,5 +31,14 @@ def evaluate():
 
     ukeruka = Ukeruka(dajare)
     ukeruka.evaluate()
-    data = ukeruka.to_dict()
+    ukeruka_result = ukeruka.to_dict()
+    data = {
+        'result': ukeruka_result['result'],
+        'f1': np.random.randint(low=1, high=5),
+        'f2': np.random.randint(low=1, high=5),
+        'f3': np.random.randint(low=1, high=5),
+        'f4': np.random.randint(low=1, high=5),
+        'f5': np.random.randint(low=1, high=5),
+        'f6': np.random.randint(low=1, high=5),
+    }
     return jsonify(dict(data=data))
