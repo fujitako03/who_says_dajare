@@ -137,3 +137,11 @@ dmypy.json
 # static
 app/static/package-lock.json
 app/static/node_modules/
+*.hdf5
+
+notebook/scripts/modules/results
+notebook/scripts/modules/checkpoints
+notebook/data
+notebook/.jupyter
+notebook/clearsing_scripts/text.txt
+notebook/clearsing_scripts/wikidata_files
