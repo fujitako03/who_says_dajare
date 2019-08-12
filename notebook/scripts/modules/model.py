@@ -2,7 +2,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dropout, Dense, Embedding, LSTM
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
 
-class RNN_Model(object):
+class RNNModel(object):
     def __init__(self, batch_size, vocab_size, emb_size, hidden_size, T, dropout, lr, model_path):
         self.vocab_size = vocab_size
         self.emb_size = emb_size
@@ -37,6 +37,17 @@ class RNN_Model(object):
         callbacks = self._build_callbacks()
         self._model.fit(
             x_train, y_train,
+            batch_size=self.batch_size,
+            epochs=epochs, steps_per_epoch=steps_per_epoch,
+            callbacks=callbacks,
+            validation_data=(val_x, val_y)
+            )
+        return 0
+
+    def fit_generator(self, x_train_gen, y_train_gen, epochs, steps_per_epoch, val_x, val_y):
+        callbacks = self._build_callbacks()
+        self._model.fit_generator(
+            x_train_gen, y_train_gen,
             batch_size=self.batch_size,
             epochs=epochs, steps_per_epoch=steps_per_epoch,
             callbacks=callbacks,
