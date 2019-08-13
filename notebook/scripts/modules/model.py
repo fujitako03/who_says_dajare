@@ -29,9 +29,9 @@ class RNNModel(object):
         tensorboard_checkpoint = TensorBoard(log_dir=self.model_path, write_graph=True)
         return [model_checkpoint, tensorboard_checkpoint]
 
-    def build_model(self, optimizers, loss, metrics):
+    def build_model(self, optimizer, loss, metrics):
         self._model = self._construct_model()
-        self._model.compile(optimizers=optimizers, loss=loss, metrics=metrics)
+        self._model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
     def fit(self, x_train, y_train, epochs, steps_per_epoch, val_x, val_y):
         callbacks = self._build_callbacks()
@@ -40,17 +40,16 @@ class RNNModel(object):
             batch_size=self.batch_size,
             epochs=epochs, steps_per_epoch=steps_per_epoch,
             callbacks=callbacks,
-            validation_data=(val_x, val_y)
+            validation_data=None
             )
         return 0
 
-    def fit_generator(self, x_train_gen, y_train_gen, epochs, steps_per_epoch, val_x, val_y):
+    def fit_generator(self, generator, epochs, steps_per_epoch, validation_data):
         callbacks = self._build_callbacks()
         self._model.fit_generator(
-            x_train_gen, y_train_gen,
-            batch_size=self.batch_size,
+            generator,
             epochs=epochs, steps_per_epoch=steps_per_epoch,
             callbacks=callbacks,
-            validation_data=(val_x, val_y)
+            validation_data=validation_data
             )
         return 0

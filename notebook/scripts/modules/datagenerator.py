@@ -139,6 +139,36 @@ class DataForGenerator(Sequence):
 
         return batch_x, batch_y
 
+    def generate_training_data(self):
+        idx = 0
+        while True:
+            batch_x = []
+            batch_y = []
+            batch_start = idx * self.batch_size
+            batch_end = (idx + 1) * self.batch_size
+            for i in range(batch_start, batch_end):
+                each_x = []
+                each_y = []
+                line_index = self.shuffled_indices[i] + 1
+                id_sentence = linecache.getline(self.ids_path, line_index)
+                target = linecache.getline(self.targets_path, line_index)
+                id_words = id_sentence.strip().split()
+
+                each_x = [self.BOS, *id_words, self.EOS]
+                batch_x.append(each_x)
+
+                each_y = float(target)
+                batch_y.append(each_y)
+            for i, id_words in enumerate(batch_x):
+                batch_x[i] = batch_x[i][:self.T]
+            batch_x = [padding(sentences, self.T) for sentences in batch_x]
+            batch_x = np.array(batch_x, dtype=np.int32)
+
+            idx += 1
+            if (idx >= self.n_data // self.batch_size):
+                idx = 0
+            yield (batch_x, batch_y)
+
     def reset(self):
         self.idx = 0
         if self.shuffle:
