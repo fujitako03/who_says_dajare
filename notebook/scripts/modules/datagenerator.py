@@ -71,6 +71,9 @@ class Vocab(object):
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(output_str)
 
+    def convert_word2id(self, tokenized_sentence):
+        sentence_labeled = [self.word2id.get(word, self.UNK) for word in tokenized_sentence]
+        return sentence_labeled
 
 def load_data(file_path, split=' '):
     data = []

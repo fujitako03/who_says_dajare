@@ -1,4 +1,4 @@
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Input, Dropout, Dense, Embedding, LSTM
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
 
@@ -13,6 +13,7 @@ class RNNModel(object):
         self.lr = lr
         self.model_path = model_path
         self._model = None
+        self.print_fn = None
 
     def _construct_model(self):
         data_inp = Input(shape=(None, ), dtype='int32', name='input')
@@ -31,7 +32,8 @@ class RNNModel(object):
 
     def build_model(self, optimizer, loss, metrics):
         self._model = self._construct_model()
-        self._model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+        self._model.compile(optimizer=optimizer, loss=loss, metrics=metricsm)
+        self._model.summary(print_fn=self.print_fn)
 
     def fit(self, x_train, y_train, epochs, steps_per_epoch, val_x, val_y):
         callbacks = self._build_callbacks()
@@ -53,3 +55,11 @@ class RNNModel(object):
             validation_data=validation_data
             )
         return 0
+    
+    def load_weights(self, weights_path):
+        self._model = load_model(weights_path)
+        self._model.summary(print_fn=self.print_fn)
+        
+    def predict(self, sentence):
+        prob = self._model.predict(sentence)
+        return prob
