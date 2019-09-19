@@ -21,7 +21,5 @@ __pycache__/
 # Ignored by the build system
 /setup.cfg
 
-static/node_modules/
-*~
-static/!dist/
-*~
+static/node_modules/*
+static/src/*
