@@ -1,6 +1,6 @@
 Flask==1.0.2
 Flask-Bootstrap==3.3.7.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 uwsgi==2.0.17.1
 pandas==0.23.4
 numpy==1.15.4
