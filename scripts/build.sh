@@ -1,2 +1,2 @@
 cd app/static/
-npm run build
+yarn run build

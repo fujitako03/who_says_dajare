@@ -6,12 +6,10 @@ automatic_scaling:
   max_instances: 2
 
 handlers:
-- url: /static
-  static_dir: static/dist/static
-  http_headers:
-    X-Content-Type-Options: nosniff
-    X-Frame-Options: DENY
-    X-XSS-Protection: 1; mode=block
+- url: /css
+  static_dir: static/dist/css
+- url: /js
+  static_dir: static/dist/js
 - url: /
   static_files: static/dist/index.html
   upload: static/dist/index.html
@@ -20,4 +18,5 @@ handlers:
     X-Frame-Options: DENY
     X-XSS-Protection: 1; mode=block
 - url: /.*
+  secure: always
   script: auto

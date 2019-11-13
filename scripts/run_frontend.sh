@@ -1,2 +1,2 @@
 cd app/static/
-npm run dev
+yarn serve

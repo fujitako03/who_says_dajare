@@ -35,13 +35,13 @@ $ npm install
 APIサーバ起動
 
 ```
-$ sh run_backend.sh
+$ sh scripts/run_backend.sh
 ```
 
 UIサーバ起動
 
 ```
-$ sh run_frontend.sh
+$ sh scripts/run_frontend.sh
 ```
 
 # deploy
@@ -55,5 +55,5 @@ $ gcloud init
 以下でデプロイする
 
 ```
-$ sh deploy.sh
+$ sh scripts/deploy.sh
 ```
