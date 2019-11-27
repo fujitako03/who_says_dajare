@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from tensorflow.keras.models import Model, load_model, Sequential
 from tensorflow.keras.layers import Input, Dropout, Dense, Embedding, LSTM
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
@@ -56,11 +57,13 @@ class RNNModel(object):
             validation_data=validation_data
             )
         return 0
-    
+
     def load_weights(self, weights_path):
         self._model = load_model(weights_path)
         self._model.summary(print_fn=self.print_fn)
-        
+
     def predict(self, sentence):
-        prob = self._model.predict(sentence)
-        return prob
+        assert np.ndim(sentence) == 1
+        sentence = np.array([sentence])
+        prob = self._model.predict_on_batch(sentence)
+        return prob[0]

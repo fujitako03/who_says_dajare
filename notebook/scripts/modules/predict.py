@@ -30,11 +30,11 @@ def train(args):
     lr = 1e-3
 
     data_gen = DataForGenerator(batch_size=batch_size, T=T)
-    data_gen.load_vocab('./vocab.csv')
+    data_gen.load_vocab('./vocab.csv', vocab_size=50000)
 
     words_id, _ = data_gen.preprocess([words], None)
 
-    vocab_size = len(data_gen.vocab.id2word)
+    vocab_size = len(data_gen.vocab.word2id)
     print("Vocab size: ", vocab_size)
 
     model = RNNModel(
@@ -52,7 +52,7 @@ def train(args):
     print(words)
     print(words_id)
 
-    pred = model._model.predict(words_id)
+    pred = model.predict(words_id[0])
 
     print(pred)
     print(pred.shape)
@@ -61,6 +61,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("checkpoint_path", help='', type=str)
     parser.add_argument("query", help="", type=str)
-    args = parser.parse_args(["./results/wiki_20191030_141957/03-0.02.hdf5", "布団がふっとんだ"])
+    args = parser.parse_args()
 
     train(args)

@@ -73,11 +73,11 @@ def train(args):
         data_gen.load_sentenceid_data(d, label=False)
 
     logger.info("Building vocablary...")
-    data_gen.load_vocab('./vocab.csv')
+    data_gen.load_vocab('./vocab.csv', vocab_size=50000)
     data_gen.make_train_and_test_data()
     test_data = data_gen.get_test_data()
 
-    vocab_size = len(data_gen.vocab.id2word)
+    vocab_size = len(data_gen.vocab.word2id)
     logger.info("Vocab size: ", vocab_size)
 
     gen = data_gen.generate_training_data()

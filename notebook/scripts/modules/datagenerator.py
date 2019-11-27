@@ -108,9 +108,9 @@ class Vocab(object):
         ids = [self.word2id.get(word, self.UNK) for word in sentence]
         return ids
 
-    def load_vocab(self, vocab_path):
+    def load_vocab(self, vocab_path, vocab_size):
         vocab_df = pd.read_csv(vocab_path, header=None)
-        self.word2id = dict([(k,ids) for k, ids in zip(vocab_df[0], vocab_df[1])])
+        self.word2id = dict([(k,ids) for k, ids in zip(vocab_df.loc[:vocab_size, 0], vocab_df.loc[:vocab_size, 1])])
 
 class DataForGenerator(Sequence):
     def __init__(self, batch_size, T, shuffle=True, bos=1, eos=2):
@@ -146,8 +146,8 @@ class DataForGenerator(Sequence):
 
         self.n_data = len(self.positive_sentence_data) +  len(self.negative_sentence_data)
 
-    def load_vocab(self, vocab_path):
-        self.vocab.load_vocab(vocab_path)
+    def load_vocab(self, vocab_path,vocab_size):
+        self.vocab.load_vocab(vocab_path, vocab_size)
 
     def build_vocab(self):
         self.vocab.build_vocab(self.positive_sentence_data + self.negative_sentence_data)
