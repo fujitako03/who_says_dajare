@@ -1,8 +1,8 @@
 pip==18.1
 setuptools==39.1.0
-wheel==0.30.0
+wheel==0.38.1
 setuptools==39.1.0
-wheel==0.30.0
+wheel==0.38.1
 jupyter==1.0.0
 matplotlib==2.2.2
 seaborn==0.8.1
